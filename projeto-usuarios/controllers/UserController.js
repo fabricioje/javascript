@@ -62,9 +62,9 @@ class UserController{
                         </td>
                     `;
 
-            this.addEventsTr(tr);
+                    this.addEventsTr(tr);
 
-            this.updateCount();
+                    this.updateCount();
 
                     this.formEl.reset();
 

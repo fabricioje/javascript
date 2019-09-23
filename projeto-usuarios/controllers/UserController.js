@@ -8,6 +8,7 @@ class UserController{
 
         this.onSubmit();
         this.onEdit();
+        this.selectAll();
     }
 
     onEdit(){
@@ -100,6 +101,8 @@ class UserController{
 
                     values.photo = content;
 
+                    this.insert(values);
+
                     this.addLine(values);
 
                     this.formEl.reset();
@@ -182,6 +185,42 @@ class UserController{
         }
 
         return new User(user.name, user.gender, user.birth, user.country, user.email, user.password, user.photo, user.admin);         
+    }
+
+    getUsersStorage(){
+
+        let users = [];
+
+        if (sessionStorage.getItem("user")) {
+            
+            users = JSON.parse(sessionStorage.getItem("user"));
+        }
+
+        return users;
+    }
+
+    selectAll(){
+
+        let users = this.getUsersStorage();
+
+        users.forEach(dataUser => {
+
+            let user = new User();
+
+            user.loadFromJSON(dataUser);
+
+            this.addLine(user);
+        });
+
+    }
+
+    insert(data){
+
+        let users = this.getUsersStorage();
+
+        users.push(data);
+
+        sessionStorage.setItem("user", JSON.stringify(users));
     }
 
     addLine(dataUser) {

@@ -2,6 +2,7 @@ class User {
 
     constructor(name, gender, birth, country, email, password, photo, admin) {
 
+        this._id;
         this._name = name;
         this._gender = gender;
         this._birth = birth;
@@ -13,40 +14,44 @@ class User {
         this._register = new Date();
     }
 
+    get id(){
+      return this._id;
+    }
+
     get register() {
-		return this._register;
+		  return this._register;
     }
 
     get name() {
-		return this._name;
+		  return this._name;
     }
     
     get gender() {
-		return this._gender;
+		  return this._gender;
     }
     
     get birth() {
-		return this._birth;
+		  return this._birth;
     }
     
     get country() {
-		return this._country;
+		  return this._country;
     }
     
     get email() {
-		return this._email;
+		  return this._email;
     }
     
     get password() {
-		return this._password;
+		  return this._password;
     }
     
     get photo() {
-		return this._photo;
+		  return this._photo;
     }
     
     get admin() {
-		return this._admin;
+		  return this._admin;
     }
     
     set photo(value){
@@ -67,6 +72,56 @@ class User {
             break;
         }
       }
+    }
+
+    static getUsersStorage(){
+
+      let users = [];
+
+      if (localStorage.getItem("user")) {
+          
+          //users = JSON.parse(sessionStorage.getItem("user"));
+          users = JSON.parse(localStorage.getItem("user"));
+      }
+
+      return users;
+  }
+
+  getNewID(){
+
+    if (!window.id) window.id = 0;
+
+    id++;
+
+    return this.id;
+  }
+
+    save(){
+
+      let users = User.getUsersStorage();
+
+      if (this.id > 0) {
+        
+        users.map(u=>{
+
+          if (u._id === this.id) {
+            
+            u = this;
+          }
+
+          return u;
+        });
+
+      }else{
+
+        this._id = this.getNewID();
+
+        users.push(this);
+      }
+
+      //sessionStorage.setItem("user", JSON.stringify(users));
+      localStorage.setItem("user", JSON.stringify(users));
+
     }
 
 }

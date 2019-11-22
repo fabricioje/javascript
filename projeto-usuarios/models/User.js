@@ -100,7 +100,7 @@ class User {
 
       let users = User.getUsersStorage();
 
-      if (this.id > 0) {
+      if (users.length > 0) {
         
         users.map(u=>{
 

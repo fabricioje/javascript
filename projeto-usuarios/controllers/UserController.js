@@ -181,22 +181,9 @@ class UserController{
         return new User(user.name, user.gender, user.birth, user.country, user.email, user.password, user.photo, user.admin);         
     }
 
-    getUsersStorage(){
-
-        let users = [];
-
-        if (localStorage.getItem("users")) {
-            
-            //users = JSON.parse(sessionStorage.getItem("user"));
-            users = JSON.parse(localStorage.getItem("users"));
-        }
-
-        return users;
-    }
-
     selectAll(){
 
-        let users = this.getUsersStorage();
+        let users = User.getUsersStorage();
 
         users.forEach(dataUser => {
 

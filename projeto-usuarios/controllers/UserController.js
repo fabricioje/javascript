@@ -185,10 +185,10 @@ class UserController{
 
         let users = [];
 
-        if (localStorage.getItem("user")) {
+        if (localStorage.getItem("users")) {
             
             //users = JSON.parse(sessionStorage.getItem("user"));
-            users = JSON.parse(localStorage.getItem("user"));
+            users = JSON.parse(localStorage.getItem("users"));
         }
 
         return users;
@@ -247,6 +247,12 @@ class UserController{
         tr.querySelector(".btn-delete").addEventListener("click", e=>{
 
             if (confirm("Deseja realmente excluir?")) {
+
+                let user = new User();
+
+                user.loadFromJSON(JSON.parse(tr.dataset.user));
+
+                user.remove();
                 
                 tr.remove();
 

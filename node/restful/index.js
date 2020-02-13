@@ -1,7 +1,11 @@
 const express = require('express');
-const consign = require('consign');
+const consign = require('consign'); //Pacote para gerenciar as rotas
+const bodyParser = require('body-parser'); //Modulo para conseguir fazer a leitura dos dados enviar como paramentro na requisição
 
 let app = express();
+
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.json());
 
 consign().include('routes').into(app);
 

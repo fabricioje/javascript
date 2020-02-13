@@ -13,11 +13,9 @@ module.exports = (app) => {
         });
     });
     
-    app.get('/users/admin', (req, res) => {
+    app.post('/users', (req, res) => {
     
-        res.json({
-            users:[]
-        });
+        res.json(req.body);
     });
 
 };

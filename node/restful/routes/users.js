@@ -6,16 +6,15 @@ let db = new NeDB({ // Cria a instancia do banco
 
 module.exports = (app) => {
 
-    app.get('/users', (req, res) =>{
+    let route = app.route('/users');
+
+    route.get((req, res) =>{
 
         // Busca todos os dados do bd de forma ordenada crescente, se quissese decrescente é só passar -1
         db.find({}).sort({name:1}) .exec((err, users)=>{
 
             if (err) {
-                console.log(`error: ${err}`)
-                res.status(400).json({
-                    error: err
-                })
+                app.utils.error.send(err, req, res);
             }else{
 
                 res.statusCode = 200;
@@ -27,16 +26,13 @@ module.exports = (app) => {
         })
     });
     
-    app.post('/users', (req, res) => {
+    route.post((req, res) => {
 
         // Insere o registro no banco de dados
         db.insert(req.body, (err, user)=>{
 
             if(err){
-                console.log(`error: ${err}`)
-                res.status(400).json({
-                    error: err
-                })
+                app.utils.error.send(err, req, res);
             }else{
 
                 res.status(200).json(user)
